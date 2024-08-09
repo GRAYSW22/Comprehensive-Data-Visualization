@@ -1,0 +1,103 @@
+---
+title: "WEEK 7 DSC520"
+author: "Stephen Gray"
+course: "DSC520"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Load necessary libraries
+library(ggplot2)
+
+# Load the dataset from the specified path
+your_data <- read.csv("C:/Users/grays/Downloads/student-survey.csv")
+
+# Other setup options
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Display the dataset
+```{r display-dataset}
+knitr::kable(your_data, caption = 'Week 7 Data')
+```
+
+```{r data-visualization}
+# Plotting TimeReading vs. TimeTV
+ggplot(your_data, aes(x = TimeReading, y = TimeTV)) +
+  geom_point() +
+  labs(title = "Time spent Reading vs. Time spent on TV",
+       x = "Time Reading",
+       y = "Time TV") +
+  theme_minimal()
+
+# Plotting TimeReading vs. Happiness
+ggplot(your_data, aes(x = TimeReading, y = Happiness)) +
+  geom_point() +
+  labs(title = "Time spent Reading vs. Happiness level",
+       x = "Time Reading",
+       y = "Happiness") +
+  theme_minimal()
+
+# Plotting TimeTV vs. Happiness
+ggplot(your_data, aes(x = TimeTV, y = Happiness)) +
+  geom_point() +
+  labs(title = "Time spent on TV vs. Happiness level",
+       x = "Time TV",
+       y = "Happiness") +
+  theme_minimal()
+```
+
+```{r covariance-matrix}
+# Creating a covariance matrix
+cov_matrix <- cov(your_data)
+print(cov_matrix)
+```
+
+# Covariance Matrix
+
+Covariance is a statistical measure that helps us understand the relationship between two variables. When assessing covariance, we are interested in whether changes in one variable are associated with changes in another. A positive covariance indicates that when one variable moves away from its mean (average), the other variable tends to move in the same direction, away from its mean as well. Conversely, a negative covariance suggests that when one variable departs from its mean, the other variable tends to move in the opposite direction,toward its mean.
+
+```{r correlation-analysis}
+# Create a correlation matrix
+cor_matrix <- cor(your_data)
+print(cor_matrix)
+```
+
+# Correlation Matrix
+
+Most people prefer to use the correlation matrix when looking at how things relate to each other because it's like having a common measuring stick. It's easier to compare and understand. The correlation numbers always go from -1 to 1, so if two things have a number close to 1, they're really connected in the same way, and if it's close to -1, they're connected but in opposite ways. If the number is near 0, it means they're not really connected. Also, we can tell if these connections are for real or just by chance because we have special tests for that.
+
+On the other hand, the covariance matrix is like using different rulers for different things. The numbers it gives can be big or small, and it depends on how big or small the things we're looking at are. This makes it hard to compare and understand when we're talking about different stuff or things with different sizes. So, for most people, the correlation matrix is much easier to work with and makes more sense.
+
+# Correlation Test
+
+```{r correlation-test}
+# Perform a correlation test between TimeReading and TimeTV
+cor_test <- cor.test(your_data$TimeReading, your_data$TimeTV)
+
+# Print the correlation test results
+print(cor_test)
+```
+
+This analysis looks at two things: the time you spend reading and the time you spend watching TV. It's trying to understand if there's a relationship between them.
+
+The number we see, -0.8830677, is called the 'correlation.' It tells us how these two things are connected. 
+
+Here's what it means:
+
+1. The 'correlation' can be between -1 and 1.
+   - If it's close to 1, it means that when you spend more time reading, you tend to spend more time watching TV as well.
+   - If it's close to -1, it means that when you spend more time reading, you tend to spend less time watching TV.
+   - If it's close to 0, it means there's not much of a connection between reading and TV time.
+
+In our case, the number is -0.8830677, which is quite close to -1. This suggests that when you spend more time reading, you tend to spend less time watching TV. So, there seems to be a strong connection where more reading means less TV time.
+
+Also, there's something called a 'p-value' which is really small, 0.0003153. This tells us that the relationship we see is very likely real and not just by chance. 
+
+So, in simple words, when you read more, you tend to watch less TV, and this relationship is quite strong.
+
+
+
+
+
+
